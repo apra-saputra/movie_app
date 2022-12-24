@@ -1,17 +1,28 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, FlatList } from "react-native";
+import CardMovieItem from "../components/CardMovieItem";
 
-const Movies = ({ navigation }) => {
+const Movies = ({navigation}) => {
+  const DATA = ["1", "2", "3"];
   return (
     <View>
       <Text>ini movie list</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("Movie")}>
-        <Text>ke movie detail </Text>
-      </TouchableOpacity>
+      <View style={styles.card} >
+        <FlatList
+          data={DATA}
+          renderItem={()=> CardMovieItem({navigation})}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  card: {
+    padding: 10,
+
+  },
+});
 
 export default Movies;

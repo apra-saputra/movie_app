@@ -15,8 +15,8 @@ const MyStack = () => {
           headerShown: false,
         })}
       />
-      <Stack.Screen name="Artist" component={DetailArtist} />
-      <Stack.Screen name="Movie" component={DetailMovie} />
+      <Stack.Screen name="DetailArtist" component={DetailArtist} />
+      <Stack.Screen name="DetailMovie" component={DetailMovie} />
     </Stack.Navigator>
   );
 };

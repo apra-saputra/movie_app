@@ -5,7 +5,7 @@ const Artists = ({navigation}) => {
   return (
     <View>
       <Text>Ini list artist</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("Artist")}>
+      <TouchableOpacity onPress={() => navigation.navigate("DetailArtist")}>
         <Text>ke artist detail </Text>
       </TouchableOpacity>
     </View>
