@@ -27,7 +27,12 @@ const CardCastDetail = ({ cast, route, castInMovie, navigation }) => {
           <ActivityIndicator
             size={"large"}
             color={color.primary}
-            style={{ flex: 1, justifyContent: "center", marginRight: 30 }}
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              marginRight: 30,
+              alignItems: "center",
+            }}
           />
         ) : (
           <View />
@@ -98,7 +103,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "space-evenly",
     alignContent: "center",
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   buttonFalse: {
     padding: 10,

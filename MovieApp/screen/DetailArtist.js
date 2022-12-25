@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
 import {
   View,
   StyleSheet,
@@ -6,42 +6,21 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import { instance } from "../bin/axios";
 import { color } from "../bin/default/color";
+import { GET_CAST_BY_ID } from "../bin/query";
 import CardCastDetail from "../components/CardCastDetail";
 
 const DetailArtist = ({ navigation, route }) => {
   const { castid } = route.params;
-  const [keyCastId, setKeyCastId] = useState("");
-  const [castById, setCastById] = useState({});
-  const [castInMovie, setCastInMovie] = useState([]);
-  const [loadingCast, setLoadingCast] = useState(true);
-  const [errorCast, setErrorCast] = useState("");
+  const { loading, error, data } = useQuery(GET_CAST_BY_ID, {
+    variables: { getCastByIdId: castid },
+  });
 
-  const fetchCastById = async (castid) => {
-    try {
-      const person = await instance(`/person/${castid}`);
-      const movieCreadit = await instance(`/person/${castid}/movie_credits`);
-      setLoadingCast(false);
-      setCastById(person.data);
-      setCastInMovie(movieCreadit.data.cast);
-    } catch (error) {
-      setErrorCast(error);
-    }
-  };
-
-  useEffect(() => {
-    if (keyCastId !== castid) setLoadingCast(true);
-
-    if (loadingCast) {
-      fetchCastById(castid);
-      setKeyCastId(castid);
-    }
-  }, [castid]);
-
-  if (loadingCast)
+  if (loading)
     return <ActivityIndicator size={"large"} color={color.secondary} />;
-  if (errorCast) return <Text>error : {errorCast}</Text>;
+  if (error) return <Text>error </Text>;
+
+  const castById = data.getCastById;
 
   return (
     <View style={styles.container}>
@@ -49,7 +28,7 @@ const DetailArtist = ({ navigation, route }) => {
         <CardCastDetail
           cast={castById}
           route={route}
-          castInMovie={castInMovie}
+          castInMovie={castById.movie}
           navigation={navigation}
         />
       </ScrollView>

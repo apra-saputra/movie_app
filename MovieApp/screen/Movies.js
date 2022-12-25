@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -8,8 +9,8 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { instance } from "../bin/axios";
 import { color } from "../bin/default/color";
+import { GET_ALL_MOVIE } from "../bin/query";
 import CardMovieItem from "../components/CardMovieItem";
 
 const Movies = ({ navigation }) => {
@@ -21,31 +22,18 @@ const Movies = ({ navigation }) => {
     "upcoming",
   ];
   const [keyword, setKeyword] = useState("popular");
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [errors, setErrors] = useState("");
 
-  const fetchingMovie = async (keyword) => {
-    try {
-      const { data } = await instance({
-        url: `/movie/${keyword}`,
-      });
-      setLoading(false);
-      setMovies(data.results);
-    } catch (error) {
-      setErrors(error);
-    }
-  };
+  const { loading, error, data } = useQuery(GET_ALL_MOVIE, {
+    variables: { category: keyword },
+  });
 
-  useEffect(() => {
-    if (loading) {
-      fetchingMovie(keyword);
-    }
-  }, [keyword]);
+  // console.log(error);
 
   if (loading)
     return <ActivityIndicator size={"large"} color={color.secondary} />;
-  if (errors) return <Text>error : {errors}</Text>;
+  if (error) return <Text>error </Text>;
+
+  const movies = data.getMovies;
 
   return (
     <View style={styles.container}>
@@ -55,7 +43,7 @@ const Movies = ({ navigation }) => {
             <TouchableOpacity
               key={idx}
               style={item == keyword ? styles.tagActive : styles.tag}
-              onPress={() => (setKeyword(item), setLoading(true))}>
+              onPress={() => setKeyword(item)}>
               <Text style={item == keyword ? styles.titleActive : styles.title}>
                 {item}
               </Text>
@@ -66,14 +54,13 @@ const Movies = ({ navigation }) => {
       {!movies ? (
         <View
           style={{
-            // flex: 1,
             height: 400,
             textAlignt: "center",
             width: "100%",
             elevation: 3,
             backgroundColor: " #fff",
           }}>
-          <Text style={styles.title}>Tidak ada Film di kategori ini</Text>
+          <Text style={styles.titleNoData}>Tidak ada Film di kategori ini</Text>
         </View>
       ) : (
         <FlatList
@@ -94,6 +81,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     color: "#fff",
+  },
+  titleNoData: {
+    fontSize: 40,
+    fontWeight: "600",
+    textAlign: "center",
+    color: "black",
   },
   titleActive: {
     fontSize: 40,

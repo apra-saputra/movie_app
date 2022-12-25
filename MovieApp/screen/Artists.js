@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
 import {
   View,
   StyleSheet,
@@ -6,32 +6,18 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-import { instance } from "../bin/axios";
 import { color } from "../bin/default/color";
+import { GET_ALL_CASTS } from "../bin/query";
 import CardCastItem from "../components/CardCastItem";
 
 const Artists = ({ navigation }) => {
-  const [casts, setCasts] = useState([]);
-  const [loadingCasts, setLoadingCasts] = useState(true);
-  const [errorCasts, setErrorCasts] = useState("");
+  const { loading, error, data } = useQuery(GET_ALL_CASTS);
 
-  const fetchCasts = async () => {
-    try {
-      const { data } = await instance("/person/popular");
-      setLoadingCasts(false);
-      setCasts(data.results);
-    } catch (error) {
-      setErrorCasts(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCasts();
-  }, []);
-
-  if (loadingCasts)
+  if (loading)
     return <ActivityIndicator size={"large"} color={color.secondary} />;
-  if (errorCasts) return <Text>error : {errorCasts}</Text>;
+  if (error) return <Text>error</Text>;
+
+  const casts = data.getCast;
 
   return (
     <View>
