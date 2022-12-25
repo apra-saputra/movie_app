@@ -29,11 +29,15 @@ const MovieResolvers = {
     getMovieById: async (_, arg) => {
       try {
         const { data } = await axiosApp.get(`/movie/${arg.id}`);
-        const response = await axiosApp.get(`/movie/${arg.id}/credits`);
+        const response = await axiosApp.get(`/movie/${arg.id}/credits`, {
+          headers: { "Accept-Encoding": "gzip,deflate,compress" },
+        });
+
+        const newData = response.data.cast.filter((_, idx) => idx < 30);
 
         const result = {
           ...data,
-          cast: response.data.cast,
+          cast: newData,
         };
 
         return result;
@@ -58,7 +62,9 @@ const MovieResolvers = {
     getCastById: async (_, arg) => {
       try {
         const { data } = await axiosApp.get(`/person/${arg.id}`);
-        const movies = await axiosApp.get(`/person/${arg.id}/movie_credits`);
+        const movies = await axiosApp.get(`/person/${arg.id}/movie_credits`, {
+          headers: { "Accept-Encoding": "gzip,deflate,compress" },
+        });
 
         const result = {
           ...data,

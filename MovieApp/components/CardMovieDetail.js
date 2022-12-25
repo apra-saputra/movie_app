@@ -111,7 +111,7 @@ const CardMovieDetail = ({ movieById, navigation, route, casts }) => {
         <Text>{movieById.overview}</Text>
       </View>
       <View style={styles.content}>
-        <Text style={styles.textTitle}>Synopsis : </Text>
+        <Text style={styles.textTitle}>Date Release : </Text>
         <Text>{movieById.release_date}</Text>
       </View>
       <View style={styles.content}>

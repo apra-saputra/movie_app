@@ -21,7 +21,7 @@ const BottomTabNavigatror = () => {
         component={Movies}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Icon name="ios-person" size={30} color={color} />
+            <Icon name="list-outline" size={30} color={color} />
           ),
           tabBarInactiveTintColor: color.primary,
         }}

@@ -6,8 +6,8 @@ const movieDefs = `#GraphQL
     release_date: String
     poster_path: String
     homepage: String
-    popularity: Int
-    vote_average: Int
+    popularity: Float
+    vote_average: Float
     vote_count: Int
     genres: [Genre]
     cast : [Cast]

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -6,38 +7,18 @@ import {
   ActivityIndicator,
   Text,
 } from "react-native";
-import { instance } from "../bin/axios";
 import { color } from "../bin/default/color";
+import { GET_MOVIE_BY_ID } from "../bin/query";
 import CardMovieDetail from "../components/CardMovieDetail";
 
 const DetailMovie = ({ route, navigation }) => {
   const { itemid } = route.params;
-  const [keyId, setKeyId] = useState("");
-  const [movieById, setMovieById] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [casts, setCasts] = useState([]);
 
-  const fetchMovieById = async (id) => {
-    try {
-      const movie = await instance(`/movie/${id}`);
-      const casts = await instance(`/movie/${id}/credits`);
-      setLoading(false);
-      setMovieById(movie.data);
-      setCasts(casts.data.cast);
-    } catch (err) {
-      setError(err);
-    }
-  };
+  const { loading, error, data } = useQuery(GET_MOVIE_BY_ID, {
+    variables: { getMovieByIdId: itemid },
+  });
 
-  useEffect(() => {
-    if (itemid !== keyId) setLoading(true);
-
-    if (loading || itemid !== keyId) {
-      fetchMovieById(itemid);
-      setKeyId(itemid);
-    }
-  }, [itemid]);
+  const movieById = data?.getMovieById;
 
   if (loading)
     return <ActivityIndicator size={"large"} color={color.secondary} />;
@@ -47,7 +28,7 @@ const DetailMovie = ({ route, navigation }) => {
     <View style={styles.container}>
       <ScrollView>
         <CardMovieDetail
-          casts={casts}
+          casts={movieById.cast}
           movieById={movieById}
           navigation={navigation}
           route={route}
