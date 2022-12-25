@@ -1,38 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   View,
   StyleSheet,
   Text,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
   FlatList,
   Linking,
 } from "react-native";
-import { instance } from "../bin/axios";
 import { color } from "../bin/default/color";
 import { imageLink } from "../bin/default/constant";
 import CardCastMovieDetail from "./CardCastMovieDetail";
 
-const CardMovieDetail = ({ itemid, navigation }) => {
-  const [movieById, setMovieById] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [casts, setCasts] = useState([]);
-  // const [genre, setGenre] = useState([]);
+const CardMovieDetail = ({ movieById, navigation, route, casts }) => {
   const [isRate, setIsRate] = useState(false);
-
-  const fetchMovieById = async () => {
-    try {
-      const movie = await instance(`/movie/${itemid}`);
-      const casts = await instance(`/movie/${itemid}/credits`);
-      setLoading(false);
-      setMovieById(movie.data);
-      setCasts(casts.data.cast);
-    } catch (err) {
-      setError(err);
-    }
-  };
 
   const postMovieCreadit = async () => {
     try {
@@ -43,19 +24,6 @@ const CardMovieDetail = ({ itemid, navigation }) => {
     }
   };
 
-  useEffect(() => {
-    if (!movieById || loading) {
-      fetchMovieById();
-    }
-  }, []);
-
-  if (loading)
-    return <ActivityIndicator size={"large"} color={color.secondary} />;
-  if (error) return <Text>Error : {error}</Text>;
-  
-  // console.log(movieById);
-
-  //getter
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
@@ -159,7 +127,9 @@ const CardMovieDetail = ({ itemid, navigation }) => {
         <FlatList
           data={casts}
           horizontal={true}
-          renderItem={({ item }) => CardCastMovieDetail({ item, navigation })}
+          renderItem={({ item }) =>
+            CardCastMovieDetail({ item, navigation, route })
+          }
           keyExtractor={(_, idx) => idx}
         />
       </View>
