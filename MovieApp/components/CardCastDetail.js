@@ -1,19 +1,37 @@
-import React from "react";
-import { View, StyleSheet, Image, Text, FlatList } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import { color } from "../bin/default/color";
 import { imageLink } from "../bin/default/constant";
 import CardCastMovieDetail from "./CardCastMovieDetail";
 
 const CardCastDetail = ({ cast, route, castInMovie, navigation }) => {
+  const [loadingImg, setLoadingImg] = useState(true);
   return (
     <View style={styles.card}>
       <View style={styles.row}>
         <Text style={styles.title}>{cast.name}</Text>
-
         <Image
+          onLoadStart={() => setLoadingImg(true)}
+          onLoadEnd={() => setLoadingImg(false)}
           source={{ uri: imageLink.imglink + cast.profile_path }}
           style={styles.img}
         />
+        {loadingImg ? (
+          <ActivityIndicator
+            size={"large"}
+            color={color.primary}
+            style={{ flex: 1, justifyContent: "center", marginRight: 30 }}
+          />
+        ) : (
+          <View />
+        )}
       </View>
       <View style={styles.contentMovie}>
         <Text style={styles.textTitle}>Movie :</Text>
