@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 40,
+    color: "#fff",
   },
   titleActive: {
     fontSize: 40,
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   },
   tag: {
     padding: 10,
-    backgroundColor: color.tertiary,
+    backgroundColor: color.primary,
     margin: 10,
     height: 70,
     borderRadius: 10,

@@ -96,8 +96,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     padding: 10,
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     alignContent: "center",
+    marginHorizontal: 10
   },
   buttonFalse: {
     padding: 10,
