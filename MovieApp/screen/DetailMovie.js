@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f2f2f2",
     alignItems: "center",
     justifyContent: "center",
-    padding: 5,
+    padding: 10,
   },
 });
 

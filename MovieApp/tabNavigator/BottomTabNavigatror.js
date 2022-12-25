@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Movies from "../screen/Movies";
 import Artists from "../screen/Artists";
-import Login from "../screen/Login";
 import HeaderCustom from "../components/HeaderCustom";
-import {color} from "../bin/default/color"
+import { color } from "../bin/default/color";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,11 +14,27 @@ const BottomTabNavigatror = () => {
         tabBarActiveTintColor: "white",
         tabBarActiveBackgroundColor: color.secondary,
         tabBarInactiveTintColor: color.primary,
-        headerTitle: () => HeaderCustom()
+        headerTitle: () => HeaderCustom(),
       })}>
-      <Tab.Screen name="Movie" component={Movies} options={() => {}} />
-      <Tab.Screen name="Artist" component={Artists} />
-      <Tab.Screen name="Login" component={Login} />
+      <Tab.Screen
+        name="Movie"
+        component={Movies}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="ios-person" size={30} color={color} />
+          ),
+          tabBarInactiveTintColor: color.primary,
+        }}
+      />
+      <Tab.Screen
+        name="Artist"
+        component={Artists}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="ios-person" size={30} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
