@@ -14,7 +14,7 @@
 - Expo
 
 ## [3rd party api]
-[developers.themoviedb.org](developers.themoviedb.org)
+[developers.themoviedb.org](https://developers.themoviedb.org)
 
 ## How to run
 - use ngrok for switch change endpoint in local
