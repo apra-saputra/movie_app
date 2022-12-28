@@ -13,7 +13,7 @@
 - React Native
 - Expo
 
-## [3rd party api]
+## 3rd party api
 [developers.themoviedb.org](https://developers.themoviedb.org)
 
 ## How to run
