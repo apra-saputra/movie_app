@@ -22,7 +22,7 @@
 - run getway, and start expo then you ready to go
 
 ## Note :
-- there is something go wrong when i try to uninstall few package that not use, so i left it
+- there is something go wrong when i try to uninstall few package that not used, so i left it
 
 ## Scrennshot
 
