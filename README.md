@@ -1,5 +1,11 @@
 # movie_app
 
+## Features 
+- user could see list movie, and list cast
+- user choose movie and cast to go to movie or cast detail
+- user could rate on movie that he/she like
+- user could see who cast played in the movie
+
 ## tech stack : 
 - apollo client
 - apollo server
