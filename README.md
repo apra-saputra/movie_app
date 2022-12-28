@@ -2,7 +2,7 @@
 
 ## Features 
 - user could see list movie, and list cast
-- user choose movie and cast to go to movie or cast detail
+- user choose movie or cast to go to movie or cast detail
 - user could rate on movie that he/she like
 - user could see who cast played in the movie
 
